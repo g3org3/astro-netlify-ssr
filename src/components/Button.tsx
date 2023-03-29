@@ -5,7 +5,7 @@ const Button = (props: Props) => {
 
   const onClick = () => {
     alert('begin!')
-    fetch('/users').then(res => {
+    fetch('/user').then(res => {
       console.log(res.status)
       return res.text()
     }).then((data) => {
