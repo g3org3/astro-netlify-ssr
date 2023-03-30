@@ -9,7 +9,7 @@ const Button = (props: Props) => {
   
   const onClick = async () => {
     try {
-      const res = await fetch('/user')
+      const res = await fetch(`/user?action=${props.label}`)
       if (res.status !== 200)  return
       const _data = await res.json()
       setData(_data)
@@ -19,7 +19,7 @@ const Button = (props: Props) => {
   }
 
   return <>
-  <button class="bg-blue-700 text-white px-10 py-2 text-lg rounded" onClick={onClick}>{props.label}</button>
+    <button class="bg-blue-700 text-white px-10 py-2 text-lg rounded" onClick={onClick}>{props.label}</button>
     <pre>
       {JSON.stringify(data(), null, 2)}
     </pre>

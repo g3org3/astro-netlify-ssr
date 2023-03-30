@@ -2,15 +2,28 @@
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 import Button from "../components/Button";
+
+const val = Astro.cookies.get("SID").value;
 ---
 
 <Layout title="Welcome to Astro.">
-  <h1>Hola</h1>
-  this was server rendered
-  <Card title="l" body="la" href="asdf" />
-  <div>
-    <Button label="props" client:load />
-  </div>
+  {
+    val ? (
+      <>
+        <h1>logged in</h1>
+        <Button label="logout" client:load />
+      </>
+    ) : (
+      <>
+        <h1>Hola</h1>
+        this was server rendered
+        <Card title="l" body="la" href="asdf" />
+        <div>
+          <Button label="login" client:load />
+        </div>
+      </>
+    )
+  }
 </Layout>
 
 <style></style>
