@@ -1,28 +1,12 @@
-import { createSignal } from 'solid-js'
-
-interface Props {
-  label: string
-}
-
-const Button = (props: Props) => {
-  const [data, setData] = createSignal([])
-  
+const Button = () => {
   const onClick = async () => {
     try {
-      const res = await fetch(`/user?action=${props.label}`)
-      if (res.status !== 200)  return
-      const _data = await res.json()
-      setData(_data)
-    } catch {
-      console.log('failed')
-    }
+      await fetch('/user')
+      location.href = '/'
+    } catch{}
   }
 
-  return <>
-    <button class="bg-blue-700 text-white px-10 py-2 text-lg rounded" onClick={onClick}>{props.label}</button>
-    <pre>
-      {JSON.stringify(data(), null, 2)}
-    </pre>
-  </>
+  return <button class="bg-slate-600 text-white px-10 py-2 text-md capitalize rounded" onClick={onClick}>logout</button>
 }
+
 export default Button

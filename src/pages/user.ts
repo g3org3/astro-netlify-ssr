@@ -1,19 +1,28 @@
 import type { APIContext } from 'astro';
 
-export function get(context: APIContext) {
-  const str = [{ name: "Alejandra" }, {name: "Jorge Adolfo"}]
+const res = (data: any, status?: number) => 
+  new Response(
+    JSON.stringify(data), 
+    {
+      status: status || 200,
+      headers: { 'content-type': 'application/json' },
+    }
+  )
 
-  const action = context.url.searchParams.get('action')
-  if (action === "login") {
-    context.cookies.set("SID", "loggedin")
-  } else {
-    context.cookies.delete("SID")
+export async function get(context: APIContext) {
+  context.cookies.delete("SID")
+
+  return res({ message: "ok" })
+}
+
+export async function post(context: APIContext) {
+  const payload = await context.request.json()
+  const userId = payload['user-id'] 
+  if (userId) {
+    context.cookies.set("SID", userId)
+
+    return res({status: 'ok'})
   }
 
-  return new Response(JSON.stringify(str), {
-    status: 200,
-    headers: {
-      'content-type': 'application/json',
-    }
-  })
+  return res({message: 'user not found'}, 404)
 }

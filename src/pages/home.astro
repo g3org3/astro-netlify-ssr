@@ -1,0 +1,31 @@
+---
+import Button from "../components/Button";
+import Layout from "../layouts/Layout.astro";
+
+const val = Astro.cookies.get("SID").value;
+
+if (!val) {
+  return Astro.redirect("/");
+}
+const url = `https://rickandmortyapi.com/api/character/${val}`;
+const res = await fetch(url);
+const user = (await res.json()) as {
+  name: string;
+  image: string;
+  status: string;
+  location?: { name: string };
+};
+---
+
+<Layout title="APP | HOME">
+  <div class="p-2 container mx-auto flex flex-row-reverse">
+    <Button client:load />
+  </div>
+  <div class="self-center bg-white p-8 shadow-md rounded">
+    <h1 class="text-3xl">Welcome {user.name}!</h1>
+    <div>{user?.location?.name}</div>
+    <img class="rounded-full" src={user.image} />
+  </div>
+</Layout>
+
+<style></style>
