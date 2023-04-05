@@ -8,11 +8,16 @@ if (val) return Astro.redirect("/home");
 
 <Layout title="Login | Welcome">
   <div
-    style={{ width: "375px" }}
-    class="bg-white shadow p-10 rounded mx-auto self-center flex flex-col gap-4"
+    style={{ paddingTop: "20%" }}
+    class="bg-slate-50 flex-1 flex flex-col items-center"
   >
-    <h2 class="text-4xl font-light">Login | Welcome!</h2>
-    <LoginForm client:load />
+    <div
+      style={{ width: "375px" }}
+      class="bg-white shadow-lg p-10 rounded flex flex-col gap-4"
+    >
+      <h2 class="text-4xl font-light">Login</h2>
+      <LoginForm client:load />
+    </div>
   </div>
 </Layout>
 

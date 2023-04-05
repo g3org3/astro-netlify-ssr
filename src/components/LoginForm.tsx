@@ -1,3 +1,5 @@
+import { createSignal } from "solid-js"
+
 type EventHandler = {
   preventDefault: () => void
   target: any
@@ -43,21 +45,27 @@ const request = async (url: string, payload?: Record<string, any>) => {
 }
 
 const Button = () => {
+  const [isLoading, setLoading] = createSignal(false)
+
   const onSubmit = async (e: EventHandler) => {
     e.preventDefault()
+    setLoading(true)
     const { payload, onReset } = getPayload(e.target)
     try {
       await request('/user', payload)
       location.href = '/home'
     } catch {}
     onReset()
+    setLoading(true)
   }
 
   return (
     <form onSubmit={onSubmit}>
       <div class="flex flex-col gap-4">
-          <input placeholder="id" class="border-2 px-4 py-2" name="user-id" type="text" />
-          <button type="submit" class="bg-blue-700 text-white px-10 py-2 text-lg rounded">login</button>
+        <input disabled={isLoading()} placeholder="id" class="rounded border-2 px-4 py-2" name="user-id" type="text" />
+        <button disabled={isLoading()} type="submit" class="bg-indigo-600 focus:bg-indigo-700 hover:bg-indigo-500 text-white px-10 py-2 text-lg rounded">
+          {isLoading() ? 'Loading...' : 'Login'}
+        </button>
       </div>
     </form>
   )

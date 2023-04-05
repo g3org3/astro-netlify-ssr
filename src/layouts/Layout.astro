@@ -16,7 +16,7 @@ const { title } = Astro.props;
     <meta name="description" content="Page with ssr and astro" />
     <title>{title}</title>
   </head>
-  <body class="p-10 gap-4">
+  <body class="bg-slate-500">
     <slot />
   </body>
 </html>
@@ -40,6 +40,7 @@ const { title } = Astro.props;
   }
   body {
     height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
   }

@@ -6,7 +6,7 @@ const Button = () => {
     } catch{}
   }
 
-  return <button class="bg-slate-600 text-white px-10 py-2 text-md capitalize rounded" onClick={onClick}>logout</button>
+  return <button class="bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-700 text-white px-10 py-2 text-md capitalize rounded" onClick={onClick}>logout</button>
 }
 
 export default Button
