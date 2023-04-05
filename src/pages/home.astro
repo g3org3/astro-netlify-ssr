@@ -24,7 +24,7 @@ const user = (await res.json()) as {
   <div class="self-center bg-white p-8 shadow-md rounded">
     <h1 class="text-3xl">Welcome {user.name}!</h1>
     <div>{user?.location?.name}</div>
-    <img class="rounded-full" src={user.image} />
+    <img alt="profile picture" class="rounded-full" src={user.image} />
   </div>
 </Layout>
 
