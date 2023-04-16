@@ -1,0 +1,36 @@
+---
+import { _ } from '../../.netlify/functions-internal/chunks/astro.5745d6a5.mjs';
+import Button from './Button'
+
+export interface Props {
+  image: string;
+  name: string;
+}
+
+const clx = (...args: any[]) => {
+    return args.map((x) => {
+        if (typeof x === "object") {
+            return Object.keys(x).filter(k => x[k]).join(' ')
+        }
+        return x
+    }).join(' ')
+}
+
+const { image, name } = Astro.props;
+const { pathname } = Astro.url
+
+---
+
+<div class="bg-indigo-800 p-2 flex flex-row-reverse shadow-lg text-white">
+    <div class="mx-auto container items-center px-4 gap-4 flex">
+        <a href="/">
+            <span class="flex items-center gap-2 text-white text-2xl">
+                <img alt="profile picture" class="h-10 rounded-full" src={image} /> {name}
+            </span>
+        </a>
+        <a class={clx("rounded p-2 px-4 hover:bg-indigo-700 flex items-center", {'bg-indigo-600': pathname === '/home'})} href="/">server</a>
+        <a class={clx("rounded p-2 px-4 hover:bg-indigo-700 flex items-center", {'bg-indigo-600': pathname === '/client'})} href="/client">client</a>
+        <div class="flex-1"></div>
+        <Button client:load /> 
+    </div>
+</div>

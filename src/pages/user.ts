@@ -19,6 +19,8 @@ export async function post(context: APIContext) {
   const payload = await context.request.json()
   const userId = payload['user-id'] 
   if (userId) {
+    // const expires = new Date(Date.now() + 10 * 1000)
+    // context.cookies.set("SID", userId, { expires })
     context.cookies.set("SID", userId)
 
     return res({status: 'ok'})

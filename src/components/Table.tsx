@@ -15,13 +15,16 @@ const defaultColumns: ColumnDef<{title: string}>[] = [
   { accessorKey: 'title' },
 ]
 
-export default function Table() {
-  const [data, setData] = createSignal([])
+export default function Table(props: {serverData?: any[]}) {
+  const [data, setData] = createSignal(props.serverData ?? [])
   const [sorting, setSorting] = createSignal<SortingState>([])
 
-  fetch('https://jsonplaceholder.typicode.com/todos')
-    .then(res => res.json())
-    .then(todos => setData(todos))
+  if (!props.serverData) {
+    fetch('/apis')
+      .then(res => res.json())
+      .then(todos => setData(todos))
+  }
+  
   
   const table = createSolidTable({
     get data() {
@@ -39,15 +42,15 @@ export default function Table() {
     getPaginationRowModel: getPaginationRowModel(),
   })
 
-  return <div class="border shadow-md rounded border-slate-400">
-    <table class="table-auto w-full border-collapse">
+  return <div class="border shadow-md rounded">
+    <table class="table-auto w-full border-collapse rounded">
       <thead>
         <For each={table.getHeaderGroups()}>
           {headerGroup => (
             <tr>
               <For each={headerGroup.headers}>
                 {header => (
-                  <th class="border-y capitalize cursor-pointer select-none bg-slate-50 p-2 pt-4 border-slate-300" onClick={header.column.getToggleSortingHandler()}>
+                  <th class="border-b capitalize cursor-pointer select-none bg-slate-50 p-2 pt-4 border-slate-200" onClick={header.column.getToggleSortingHandler()}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -71,7 +74,7 @@ export default function Table() {
             <tr>
               <For each={row.getVisibleCells()}>
                 {cell => (
-                  <td class="border-y p-2 border-slate-300">
+                  <td class="border-y p-2 border-slate-200">
                     {flexRender(
                       cell.column.columnDef.cell,
                       cell.getContext()
